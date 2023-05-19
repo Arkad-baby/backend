@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./database.db"
+}
+
+model user {
+  id          String     @id @default(uuid())
+  name        String
+  email       String     @unique
+  dateOfBirth String
+  gender      String
+  document    document[]
+  comment     comment[]
+  revision    revision[]
+}
+
+model document {
+  id          String    @id @default(uuid())
+  name        String
+  description String? //desc lai option garekoo
+  user        user      @relation(fields: [userId], references: [id])
+  userId      String
+  pages       pages[]
+  comment     comment[]
+  active      Boolean
+}
+
+model pages {
+  id         String     @id @default(uuid())
+  document   document   @relation(fields: [documentId], references: [id])
+  documentId String
+  pageNumber Int
+  title      String?
+  content    String
+  image image[]
+  revision   revision[]
+  comment    comment[]
+}
+
+model revision {
+  id      String    @id @default(uuid())
+  pages   pages     @relation(fields: [pageId], references: [id])
+  pageId  String
+  title   String? //title nahuna ni sakxaa
+  content String
+  user    user      @relation(fields: [userId], references: [id])
+  userId  String
+  comment comment[]
+  image image[]
+}
+
+model comment {
+  id         String    @id @default(uuid())
+  text       String
+  user       user      @relation(fields: [userId], references: [id])
+  userId     String
+  document   document? @relation(fields: [documentId], references: [id])
+  documentId String?
+  pages      pages?    @relation(fields: [pageId], references: [id])
+  pageId    String?
+  revision   revision? @relation(fields: [revisionId], references: [id])
+  revisionId String?
+}
+
+
+
+model image{
+      id         String    @id @default(uuid())
+      pages pages?  @relation(fields: [pageId], references: [id])
+      pageId String?
+      revision revision?  @relation(fields: [revisionId], references: [id])
+      revisionId String?
+      type String?  //png svg jpeg 
+      size String?
+      image String
+      dimension String
+}

@@ -1,0 +1,23 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "nodemon src/index.ts"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "@prisma/client": "^4.14.1",
+    "apollo-server-core": "^3.12.0",
+    "apollo-server-express": "^3.12.0",
+    "express": "^4.18.2",
+    "graphql": "^16.6.0",
+    "lodash.merge": "^4.6.2",
+    "nodemon": "^2.0.22",
+    "prisma": "^4.14.1",
+    "ts-node": "^10.9.1"
+  },
+  "devDependencies": {
+    "loadash": "^1.0.0"
+  }
+}
